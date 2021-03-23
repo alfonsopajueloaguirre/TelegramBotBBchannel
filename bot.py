@@ -24,6 +24,12 @@ def uno_command_handler(update, context):
     )
 
 
+def mimir_command_handler(update, context):
+    update.message.chat.send_animation(
+        animation=open('mimir.mp4', 'rb')
+    )
+
+
 #Funcion QR
 def qr_command_handler(update, context):
 
@@ -89,6 +95,7 @@ if __name__ == '__main__':
 
     dp.add_handler(CommandHandler('start', start_command_handler))
     dp.add_handler(CommandHandler('UNO', uno_command_handler))
+    dp.add_handler(CommandHandler('mimir', mimir_command_handler))
 
     dp.add_handler(ConversationHandler(
         entry_points=[
