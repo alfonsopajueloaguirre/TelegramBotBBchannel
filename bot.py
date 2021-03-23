@@ -6,6 +6,7 @@ from telegram import InlineKeyboardMarkup, InlineKeyboardButton, ChatAction
 
 INPUT_TEXT_STATE = 0
 
+
 def start_command_handler(update, context):
 
     update.message.reply_text(
@@ -17,12 +18,19 @@ def start_command_handler(update, context):
     )
 
 
+def uno_command_handler(update, context):
+    update.message.chat.send_photo(
+        photo=open('UNO.jpeg', 'rb')
+    )
+
+
 #Funcion QR
 def qr_command_handler(update, context):
 
     update.message.reply_text('Enviame un texto para generarte un codigo QR.')
 
     return INPUT_TEXT_STATE
+
 
 def generate_qr(text):
 
@@ -32,6 +40,7 @@ def generate_qr(text):
     img.save(filename)
 
     return filename
+
 
 def input_text(update, context):
     text = update.message.text
@@ -43,6 +52,7 @@ def input_text(update, context):
     send_qr(filename, chat)
 
     return ConversationHandler.END
+
 
 def send_qr(filename, chat):
 
@@ -57,6 +67,7 @@ def send_qr(filename, chat):
 
     os.unlink(filename)
 
+
 #Funcion QR END
 def qr_callback_handler(update, context):
 
@@ -69,6 +80,7 @@ def qr_callback_handler(update, context):
 
     return INPUT_TEXT_STATE
 
+
 if __name__ == '__main__':
 
     updater = Updater(token='1791382674:AAFZ9l1jxH-wHXpFeapw5zDJ4ZelTB9XEV8', use_context=True)
@@ -76,11 +88,12 @@ if __name__ == '__main__':
     dp = updater.dispatcher
 
     dp.add_handler(CommandHandler('start', start_command_handler))
+    dp.add_handler(CommandHandler('UNO', uno_command_handler))
 
     dp.add_handler(ConversationHandler(
         entry_points=[
             CommandHandler('qr', qr_command_handler),
-            CallbackQueryHandler(pattern='qr', callback=qr_callback_handler())
+            CallbackQueryHandler(pattern='qr', callback=qr_callback_handler)
         ],
 
         states={
