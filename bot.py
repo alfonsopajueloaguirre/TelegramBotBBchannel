@@ -34,8 +34,6 @@ def comandos_command_handler(update, context):
     )
 
 
-
-
 def uno_command_handler(update, context):
     update.message.chat.send_photo(
         photo=open('UNO.jpeg', 'rb')
