@@ -1,10 +1,8 @@
 import logging
 import os
-import qrcode
 from telegram.ext import Updater, CommandHandler, ConversationHandler, CallbackQueryHandler, MessageHandler, Filters
 from telegram import InlineKeyboardMarkup, InlineKeyboardButton, ChatAction, KeyboardButton
 
-INPUT_TEXT_STATE = 0
 
 #Configurar logging
 logging.basicConfig(
@@ -34,8 +32,6 @@ def comandos_command_handler(update, context):
     )
 
 
-
-
 def uno_command_handler(update, context):
     update.message.chat.send_photo(
         photo=open('UNO.jpeg', 'rb')
@@ -49,63 +45,6 @@ def mimir_command_handler(update, context):
 
 def error(update, context):
     print(f"Update{update} caused error {context.error}")
-
-
-#Funcion QR
-def qr_command_handler(update, context):
-
-    update.message.reply_text('Enviame un texto para generarte un codigo QR.')
-
-    return INPUT_TEXT_STATE
-
-
-def generate_qr(text):
-
-    filename = text + '.jpg'
-
-    img = qrcode.make(text)
-    img.save(filename)
-
-    return filename
-
-
-def input_text(update, context):
-    text = update.message.text
-
-    filename = generate_qr(text)
-
-    chat = update.message.chat
-
-    send_qr(filename, chat)
-
-    return ConversationHandler.END
-
-
-def send_qr(filename, chat):
-
-    chat.send_action(
-        action=ChatAction.UPLOAD_PHOTO,
-        timeout=None
-    )
-
-    chat.send_photo(
-        photo=open(filename, 'rb')
-    )
-
-    os.unlink(filename)
-
-
-#Funcion QR END
-def qr_callback_handler(update, context):
-    query = update.callback_query
-    query.answer()
-
-    query.edit_message_text(
-        text='Enviame un texto para generarte un codigo QR.'
-    )
-
-    return INPUT_TEXT_STATE
-
 
 def comandos_callback_handler(update, context):
     query = update.callback_query
@@ -133,20 +72,9 @@ if __name__ == '__main__':
     dp.add_handler(CommandHandler('mimir', mimir_command_handler))
     dp.add_handler(CommandHandler('comandos', comandos_command_handler))
 
-    dp.add_handler(ConversationHandler(
-        entry_points=[
-            CommandHandler('qr', qr_command_handler),
-            CallbackQueryHandler(pattern='qr', callback=qr_callback_handler)
-        ],
-
-        states={
-            INPUT_TEXT_STATE: [MessageHandler(Filters.text, input_text)]
-        },
-
-        fallbacks=[]
-    ))
-
     dp.add_error_handler(error)
+
     updater.start_polling()
     print("BOT_CARGADO")
+
     updater.idle()
