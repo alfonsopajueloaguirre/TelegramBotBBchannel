@@ -27,8 +27,8 @@ def help_command_handler(update, context):
     user_id = update.effective_user['username']
     logger.info(f"El usuario {user_id}, ha solicitado la lista de comandos")
     update.message.reply_text(
-        text='Estos son los comandos disponibles.\n\n/UNO - como que UNO?\n/mimir - a la cama\n'
-             '/lasemilla - invoca a Jose\n/amigos - ver codigos de amigos'
+        text='Estos son los comandos disponibles:\n\n/UNO - ¿Cómo que UNO?\n/mimir - a la cama\n'
+             '/lasemilla - invoca a Jose\n/27 - el numero mágico\n/amigos - ver códigos de amigos'
     )
 
 
