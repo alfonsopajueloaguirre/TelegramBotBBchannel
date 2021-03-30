@@ -102,9 +102,9 @@ def error(update, context):
 #Bloque de main token original:1791382674:AAFZ9l1jxH-wHXpFeapw5zDJ4ZelTB9XEV8 token prueba:1788135825:AAGK8O5i7bPxyFyOoKyC-rAyGHyMFc8Q3Hk
 if __name__ == '__main__':
 
-#Bot_BB = Bot("1788135825:AAGK8O5i7bPxyFyOoKyC-rAyGHyMFc8Q3Hk")
+#Bot_BB = Bot("1791382674:AAFZ9l1jxH-wHXpFeapw5zDJ4ZelTB9XEV8")
 
-    updater = Updater(token='1788135825:AAGK8O5i7bPxyFyOoKyC-rAyGHyMFc8Q3Hk', use_context=True)
+    updater = Updater(token='1791382674:AAFZ9l1jxH-wHXpFeapw5zDJ4ZelTB9XEV8', use_context=True)
 
     dp = updater.dispatcher
 
