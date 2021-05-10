@@ -75,14 +75,14 @@ def amigos_command_handler(update, context):
     )
 
 
-def veintisiete(update, context):
+def detectar_texto(update, context):
     if update.message.text.find("27") > 0:
         user_id = update.effective_user['username']
         logger.info(f"El usuario {user_id}, ha invocado el número magico")
         update.message.chat.send_sticker(
             sticker='CAACAgQAAxkBAAM7YGOrTmm_xGNJA0hhCXH5-ilsE0oAAqgBAAIghU0O5euI3ERF0YceBA'
         )
-    if update.message.text.find("Arcueid") > 0:
+    if update.message.text.find("arcueid") > 0:
         user_id = update.effective_user['username']
         logger.info(f"El usuario {user_id}, ha nombrado a la entidad suprema")
         update.message.chat.send_photo(
@@ -115,7 +115,7 @@ if __name__ == '__main__':
     dp.add_handler(CommandHandler('lasemilla', semilla_command_handler))
     dp.add_handler(CommandHandler('amigos', amigos_command_handler))
     dp.add_handler(CommandHandler('teparto', te_parto_command_handler))
-    dp.add_handler(MessageHandler(Filters.text, veintisiete))
+    dp.add_handler(MessageHandler(Filters.text, detectar_texto))
     dp.add_handler(MessageHandler(Filters.sticker, sticker_id))
 
     dp.add_error_handler(error)
