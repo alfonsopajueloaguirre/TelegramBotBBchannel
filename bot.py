@@ -92,8 +92,7 @@ def buster_command_handler(update, context):
     logger.info(f"El usuario {user_id}, ha reverenciado el meta de buster")
     update.message.chat.send_photo(
         photo=open('buster.jpg', 'rb')
-    )      
-
+    )
 
 def sticker_id(update, context):
     print(update.message.sticker)
