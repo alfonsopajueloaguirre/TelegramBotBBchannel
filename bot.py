@@ -28,7 +28,7 @@ def help_command_handler(update, context):
     update.message.reply_text(
         text='Estos son los comandos disponibles:\n\n/UNO - ¿Cómo que UNO?\n/mimir - a la cama\n'
              '/lasemilla - invoca a Jose\n/27 - el número mágico\n/amigos - ver códigos de amigos\n/teparto - revienta un otaku culiao\n'
-             '/arcueid - la mejor\n/bustercito - silenciar a los quickistas'
+             '/arcueid - la mejor\n/bustercito - silenciar a los quickistas\n/bonk - a la horny jail'
     )
 
 
@@ -94,8 +94,15 @@ def buster_command_handler(update, context):
         photo=open('buster.jpg', 'rb')
     )
 
+def bonk_command_handler(update, context):
+    user_id = update.effective_user['username']
+    logger.info(f"El usuario {user_id}, ha mandado un bonkeo")
+    update.message.chat.send_photo(
+        photo=open('horny.png', 'rb')
+    )
+
 def sticker_id(update, context):
-    print(update.message.sticker)
+    print('Información del sticker: ' + update.message.sticker)
 
 
 #Configuracion de error
@@ -122,6 +129,7 @@ if __name__ == '__main__':
     dp.add_handler(CommandHandler('27', numero_command_handler))
     dp.add_handler(CommandHandler('arcueid', arcueid_command_handler))
     dp.add_handler(CommandHandler('bustercito', buster_command_handler))
+    dp.add_handler(CommandHandler('bonk', bonk_command_handler))
     dp.add_handler(MessageHandler(Filters.sticker, sticker_id))
 
     dp.add_error_handler(error)
