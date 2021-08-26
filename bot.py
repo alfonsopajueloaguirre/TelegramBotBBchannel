@@ -28,7 +28,7 @@ def help_command_handler(update, context):
     update.message.reply_text(
         text='Estos son los comandos disponibles:\n\n/UNO - ¿Cómo que UNO?\n/mimir - a la cama\n'
              '/lasemilla - invoca a Jose\n/27 - el número mágico\n/amigos - ver códigos de amigos\n/teparto - revienta un otaku culiao\n'
-             '/arcueid - la mejor\n/bustercito - silenciar a los quickistas\n/bonk - a la horny jail'
+             '/arcueid - la mejor\n/bustercito - silenciar a los quickistas\n/bonk - a la horny jail\n/oshieteo - bad day\n/juan - tambien llamado horse luis'
     )
 
 
@@ -70,7 +70,7 @@ def amigos_command_handler(update, context):
     update.message.reply_text(
         text='Códigos de amigo\n\nNA\nMadara: 020349652\nSócrates: 250095682\nLoreneas: 647824428\nSKIBOU: 859216994\n'
              'Pochaco: 673107507\nLopeta: 740711472\nSerjunpe: 762791833\nPendrat: 088828445\n'
-             'Jaggles: 005172928\nVicky: 244515342\nSpaiky: 849736116\nNyazan: 202226679\n\nJP\nAlf: 042474419\nKatsumi: 464519697'
+             'Jaggles: 005172928\nVicky: 244515342\nSpaiky: 849736116\nNyazan: 202226679\n\nJP\nAlf: 042474419\nKatsumi: 464519697\nZel: 333023712'
     )
 
 def numero_command_handler(update, context):
@@ -101,6 +101,20 @@ def bonk_command_handler(update, context):
         photo=open('horny.png', 'rb')
     )
 
+def spiderman_command_handler(update, context):
+    user_id = update.effective_user['username']
+    logger.info(f"El usuario {user_id}, ha terminado tokyo ghoul")
+    update.message.reply_text(
+        text='https://www.youtube.com/watch?v=jp-JKB1kqIc'
+    )
+
+def juan_command_handler(update, context):
+    user_id = update.effective_user['username']
+    logger.info(f"El usuario {user_id}, ha llamado a juan")
+    update.message.chat.send_photo(
+        photo=open('juan.jpg', 'rb')
+    )
+
 def sticker_id(update, context):
     print('Información del sticker: ' + update.message.sticker)
 
@@ -113,7 +127,7 @@ def error(update, context):
 #Bloque de main token original:1895544638:AAG5oHP2ZEF_yVXXqYjO-gulRxmltCqAGdI token prueba:1788135825:AAGK8O5i7bPxyFyOoKyC-rAyGHyMFc8Q3Hk
 if __name__ == '__main__':
 
-#Bot_BB = Bot("1791382674:AAFZ9l1jxH-wHXpFeapw5zDJ4ZelTB9XEV8")
+#Bot_BB = Bot("1895544638:AAG5oHP2ZEF_yVXXqYjO-gulRxmltCqAGdI")
 
     updater = Updater(token='1895544638:AAG5oHP2ZEF_yVXXqYjO-gulRxmltCqAGdI', use_context=True)
 
@@ -130,6 +144,8 @@ if __name__ == '__main__':
     dp.add_handler(CommandHandler('arcueid', arcueid_command_handler))
     dp.add_handler(CommandHandler('bustercito', buster_command_handler))
     dp.add_handler(CommandHandler('bonk', bonk_command_handler))
+    dp.add_handler(CommandHandler('oshieteo', spiderman_command_handler))
+    dp.add_handler(CommandHandler('juan', juan_command_handler))
     dp.add_handler(MessageHandler(Filters.sticker, sticker_id))
 
     dp.add_error_handler(error)
