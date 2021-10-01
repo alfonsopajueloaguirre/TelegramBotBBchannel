@@ -1,8 +1,15 @@
 import logging
 import os
-from telegram.ext import Updater, CommandHandler, ConversationHandler, CallbackQueryHandler, MessageHandler, Filters
-from telegram import InlineKeyboardMarkup, InlineKeyboardButton, ChatAction, KeyboardButton, Bot
+from telegram.ext import Updater, CommandHandler, MessageHandler, Filters
+from telegram import InlineKeyboardMarkup, InlineKeyboardButton
 from telegram.files import sticker
+from dotenv import load_dotenv 
+load_dotenv()
+
+
+#Configurar tokens
+token_true = os.environ.get("api-token")
+token_trial = os.environ.get("api-prueba")
 
 #Configurar logging
 logging.basicConfig(
@@ -28,7 +35,8 @@ def help_command_handler(update, context):
     update.message.reply_text(
         text='Estos son los comandos disponibles:\n\n/UNO - ¿Cómo que UNO?\n/mimir - a la cama\n'
              '/lasemilla - invoca a Jose\n/27 - el número mágico\n/amigos - ver códigos de amigos\n/teparto - revienta un otaku culiao\n'
-             '/arcueid - la mejor\n/bustercito - silenciar a los quickistas\n/bonk - a la horny jail\n/oshieteo - bad day\n/juan - tambien llamado horse luis'
+             '/arcueid - la mejor\n/bustercito - silenciar a los quickistas\n/bonk - a la horny jail\n/oshieteo - bad day\n/juan - tambien llamado horse luis\n'
+             '/cuarso - Saint Quartz!?\n/gacha - gacha is a lie'
     )
 
 
@@ -115,6 +123,20 @@ def juan_command_handler(update, context):
         photo=open('juan.jpg', 'rb')
     )
 
+def cuarso_command_handler(update, context):
+    user_id = update.effective_user['username']
+    logger.info(f"El usuario {user_id}, ha obtenido el cuarso")
+    update.message.chat.send_photo(
+        photo=open('cuarso.jpg', 'rb')
+    )
+
+def gacha_command_handler(update, context):
+    user_id = update.effective_user['username']
+    logger.info(f"El usuario {user_id}, ha solicitado el gacha")
+    update.message.chat.send_photo(
+        photo=open('gacha.jpg', 'rb')
+    )
+
 def sticker_id(update, context):
     print('Información del sticker: ' + update.message.sticker)
 
@@ -124,12 +146,10 @@ def error(update, context):
     print(f"La update: {update} ha causado el error: {context.error}")
 
 
-#Bloque de main token original:1895544638:AAG5oHP2ZEF_yVXXqYjO-gulRxmltCqAGdI token prueba:1788135825:AAGK8O5i7bPxyFyOoKyC-rAyGHyMFc8Q3Hk
+#Bloque de main 
 if __name__ == '__main__':
 
-#Bot_BB = Bot("1895544638:AAG5oHP2ZEF_yVXXqYjO-gulRxmltCqAGdI")
-
-    updater = Updater(token='1895544638:AAG5oHP2ZEF_yVXXqYjO-gulRxmltCqAGdI', use_context=True)
+    updater = Updater(token=token_trial, use_context=True)
 
     dp = updater.dispatcher
 
@@ -146,6 +166,8 @@ if __name__ == '__main__':
     dp.add_handler(CommandHandler('bonk', bonk_command_handler))
     dp.add_handler(CommandHandler('oshieteo', spiderman_command_handler))
     dp.add_handler(CommandHandler('juan', juan_command_handler))
+    dp.add_handler(CommandHandler('cuarso', cuarso_command_handler))
+    dp.add_handler(CommandHandler('gacha', gacha_command_handler))
     dp.add_handler(MessageHandler(Filters.sticker, sticker_id))
 
     dp.add_error_handler(error)
